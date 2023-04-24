@@ -1,0 +1,371 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap");
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Ubuntu", sans-serif;
+    background-color: aliceblue;
+    color: #000;
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    perspective: 750px;
+}
+
+*:not(:empty) {
+    transform-style: preserve-3d;
+}
+
+.checkboxes {
+    width: 100%;
+    max-width: 180px;
+}
+
+.flipBox {
+    position: relative;
+    display: block;
+    text-align: left;
+    margin: 1em auto;
+    cursor: pointer;
+}
+
+.flipBox:active>.flipBox_boxOuter {
+    height: 25%;
+}
+
+.flipBox span {
+    padding-left: 1.25em;
+}
+
+.flipBox>input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: fixed;
+    left: -100vmax;
+    top: -100vmax;
+}
+
+.flipBox>input:checked~.flipBox_boxOuter {
+    -webkit-animation: flipBox1 1s forwards linear;
+    animation: flipBox1 1s forwards linear;
+}
+
+.flipBox>input:checked~.flipBox_boxOuter .flipBox_box {
+    -webkit-animation: flipBox2 1s forwards ease-in-out;
+    animation: flipBox2 1s forwards ease-in-out;
+}
+
+.flipBox>input:checked~.flipBox_shadow {
+    -webkit-animation: flipBox3 1s forwards ease-in-out;
+    animation: flipBox3 1s forwards ease-in-out;
+}
+
+.flipBox>input:not(:checked)~.flipBox_boxOuter {
+    -webkit-animation: flipBox4 1s forwards linear;
+    animation: flipBox4 1s forwards linear;
+}
+
+.flipBox>input:not(:checked)~.flipBox_boxOuter .flipBox_box {
+    -webkit-animation: flipBox5 1s forwards ease-in-out;
+    animation: flipBox5 1s forwards ease-in-out;
+}
+
+.flipBox>input:not(:checked)~.flipBox_shadow {
+    -webkit-animation: flipBox6 1s forwards ease-in-out;
+    animation: flipBox6 1s forwards ease-in-out;
+}
+
+.flipBox>input:disabled~* {
+    cursor: not-allowed;
+}
+
+.flipBox>input:disabled~.flipBox_boxOuter {
+    height: 0%;
+}
+
+.flipBox>input:disabled~.flipBox_boxOuter .flipBox_box>div:nth-child(6) {
+    background-color: #ccc;
+}
+
+.flipBox>input:disabled~.flipBox_boxOuter .flipBox_box>div:nth-child(-n+5),
+.flipBox>input:disabled~.flipBox_boxOuter~.flipBox_shadow {
+    display: none;
+}
+
+.flipBox>input:focus-visible~span {
+    outline: 1px #000 solid;
+    outline-offset: 0.25em;
+}
+
+.flipBox_boxOuter {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 1em;
+    height: 1em;
+    transform-origin: top;
+    transition: height 0.25s;
+}
+
+.flipBox_box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1em;
+    height: 100%;
+    transform: translate(-50%, -50%);
+}
+
+.flipBox_box>div {
+    position: absolute;
+    width: 1em;
+    box-shadow: 0 0 0.25em #0007 inset;
+}
+
+.flipBox_box>div:nth-child(1) {
+    background-image: linear-gradient(#0F70FC, white);
+    transform: rotateY(0deg) translateX(50%) rotateY(90deg);
+    height: 100%;
+}
+
+.flipBox_box>div:nth-child(2) {
+    background-image: linear-gradient(#0F70FC, white);
+    transform: rotateY(90deg) translateX(50%) rotateY(90deg);
+    height: 100%;
+}
+
+.flipBox_box>div:nth-child(3) {
+    background-image: linear-gradient(#0F70FC, white);
+    transform: rotateY(180deg) translateX(50%) rotateY(90deg);
+    height: 100%;
+}
+
+.flipBox_box>div:nth-child(4) {
+    background-image: linear-gradient(#0F70FC, white);
+    transform: rotateY(270deg) translateX(50%) rotateY(90deg);
+    height: 100%;
+}
+
+.flipBox_box>div:nth-child(5) {
+    background-color: #0F70FC;
+    transform: rotateX(90deg) translateY(-0.5em);
+    transform-origin: top;
+    height: 1em;
+}
+
+.flipBox_box>div:nth-child(5)::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    -webkit-clip-path: polygon(12.5% 56.25%, 25% 43.75%, 37.5% 56.25%, 75% 18.75%, 87.5% 31.25%, 37.5% 81.25%, 12.5% 56.25%);
+    clip-path: polygon(12.5% 56.25%, 25% 43.75%, 37.5% 56.25%, 75% 18.75%, 87.5% 31.25%, 37.5% 81.25%, 12.5% 56.25%);
+}
+
+.flipBox_box>div:nth-child(6) {
+    bottom: 0;
+    background-color: white;
+    transform: rotateX(90deg) translateY(0.5em);
+    transform-origin: bottom;
+    height: 1em;
+}
+
+.flipBox_shadow {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 1em;
+    height: 1em;
+    transform: translateY(-50%) translateZ(-1px);
+    background-color: #0007;
+    filter: blur(0.2em);
+}
+
+@-webkit-keyframes flipBox1 {
+
+    0%,
+    100% {
+        transform: rotateX(90deg);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+
+    50% {
+        transform: rotateX(90deg) translateY(2em);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+}
+
+@keyframes flipBox1 {
+
+    0%,
+    100% {
+        transform: rotateX(90deg);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+
+    50% {
+        transform: rotateX(90deg) translateY(2em);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+}
+
+@-webkit-keyframes flipBox2 {
+    from {
+        transform: translate(-50%, -50%) rotateX(0deg) rotateY(180deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0deg);
+    }
+}
+
+@keyframes flipBox2 {
+    from {
+        transform: translate(-50%, -50%) rotateX(0deg) rotateY(180deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0deg);
+    }
+}
+
+@-webkit-keyframes flipBox3 {
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateZ(-1px) scale(1);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+
+    50% {
+        transform: translateY(-50%) translateZ(-1px) scale(1.5);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+}
+
+@keyframes flipBox3 {
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateZ(-1px) scale(1);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+
+    50% {
+        transform: translateY(-50%) translateZ(-1px) scale(1.5);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+}
+
+@-webkit-keyframes flipBox4 {
+
+    0%,
+    100% {
+        transform: rotateX(90deg);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+
+    50% {
+        transform: rotateX(90deg) translateY(2em);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+}
+
+@keyframes flipBox4 {
+
+    0%,
+    100% {
+        transform: rotateX(90deg);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+
+    50% {
+        transform: rotateX(90deg) translateY(2em);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+}
+
+@-webkit-keyframes flipBox5 {
+    from {
+        transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotateX(-360deg) rotateY(180deg);
+    }
+}
+
+@keyframes flipBox5 {
+    from {
+        transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotateX(-360deg) rotateY(180deg);
+    }
+}
+
+@-webkit-keyframes flipBox6 {
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateZ(-1px) scale(1);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+
+    50% {
+        transform: translateY(-50%) translateZ(-1px) scale(1.5);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+}
+
+@keyframes flipBox6 {
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateZ(-1px) scale(1);
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
+
+    50% {
+        transform: translateY(-50%) translateZ(-1px) scale(1.5);
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+}
+
+@media (prefers-reduced-motion) {
+
+    .flipBox_boxOuter,
+    .flipBox_box,
+    .flipBox_shadow {
+        -webkit-animation-play-state: paused !important;
+        animation-play-state: paused !important;
+    }
+
+    .flipBox_boxOuter {
+        transition: none;
+    }
+}
